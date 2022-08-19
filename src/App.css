@@ -1,5 +1,15 @@
+:root{
+  --digit-color: #333333;
+  --op-color: #ff9f0a;
+  --mod-color: #a5a5a5;
+}
+
 .App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+
 }
 
 .App-logo {
@@ -13,8 +23,17 @@
   }
 }
 
+button:hover{
+  opacity: 0.4;
+}
+
+button:active{
+  opacity: 0.4;
+  transform: translateY(3px)
+}
+
 .App-header {
-  background-color: #282c34;
+  background-color: var(--digit-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -27,6 +46,73 @@
 .App-link {
   color: #61dafb;
 }
+
+.btn-zero{
+  color:white;
+  background-color:var(--digit-color);
+  border: none;
+  border-radius: 30px;
+  width: 60px;
+  height: 30px;
+}
+
+.btn-op{
+  color: white;
+  background-color: var(--op-color);
+  border: none;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+
+
+.btn-mod{
+  color: white;
+  background-color: var(--mod-color);
+  border: none;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.btn-digit{
+  color: white;
+  font-size: large;
+  background-color: var(--digit-color);
+  border: none;
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
+}
+
+.calculator-body{
+  margin-top: 20px;
+  background-color: black;
+  border-radius: 30px;
+  height: 500px;
+  width: 260px;
+  display: grid;
+
+}
+
+.key-body{
+
+  padding-top: 53px;
+  padding-left: 10px;
+  /*border: solid;
+  border-color: red;*/
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.output-field{
+  color: white;
+  font-size: xx-large;
+  /*border: solid red;*/
+}
+
+
 
 @keyframes App-logo-spin {
   from {
