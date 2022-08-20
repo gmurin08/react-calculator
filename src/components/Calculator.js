@@ -1,20 +1,15 @@
 import {useState, useEffect} from 'react'
 import Button from './buttons/Button'
 import OutputField from './output/OutputField'
-import clsx from 'clsx'
+import {labels} from '../assets/labels'
 
 export default function Calculator(){
-    const [num, setNum] = useState(0)
-    const labels = ['AC', '\xB1', '%', '/',
-                     '7', '8', '9', 'X',
-                     '4', '5', '6', "-",
-                     '1', '2', '3', '+',
-                     '0', '.', '=']
+    const [num, setNum] = useState('0')
+
     function handleClick(event){
-        console.log(event.target.value)
+        setNum(event.target.value)
     }
 
-      
     return(
     <div className='calculator-body'>
         <OutputField num={num}/>
