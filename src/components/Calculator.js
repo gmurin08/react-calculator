@@ -29,12 +29,8 @@ export default function Calculator(){
                     return <Button key={idx} handleClick={handleClick} isOp>{label}</Button>
                 }else{
                     return <Button key={idx} handleClick={handleClick} isDigit>{label}</Button>
-
-                }
-            
-            }
-                )
-            }
+                } 
+            })}
         </div>
     </div>)
 } 
