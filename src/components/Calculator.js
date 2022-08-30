@@ -1,88 +1,71 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import Button from './buttons/Button'
 import OutputField from './output/OutputField'
 import {labels} from '../assets/labels'
 
 export default function Calculator(){
-    const [num, setNum] = useState(0)
-    const [input, setInput] = useState(["0"])
-    const [op, setOp] = useState()
-    const [operand1, setOperand1] = useState(0);
-    const [operand2, setOperand2] = useState(0);
-
-    useEffect(()=>{ 
-        setNum(Number(input.join('')))
-    },[input])
-
-    useEffect(()=>{
-
-        if(op === "+"){
-            setNum(operand1 + operand2)
-        }
-        if(op === "-"){
-            setNum(operand1 - operand2)
-        }
-        if(op === "/"){
-            if(!operand2){
-                return
-            }
-            const result = operand1/operand2
-            if(result % 1 !== 0){
-                setNum(result.toPrecision(4))
-            }
-            setNum(result)
-        }
-    
-    }, [operand1, operand2, op])
-
+    const [output, setOutput] = useState(0);
+    const [operation, setOperation] = useState("");
+    const [firstTerm, setFirstTerm] = useState(0);
+    const equation = useRef("");
 
     function handleClick(event){
-        const digit = event.target.value
-        console.log("++++++++++++++++++++++++++++")
-        console.log("input is " + input)
-        console.log("num is " + num)
-        console.log("operand1 is " + operand1)
-        console.log("operator is " + op)
-        console.log("operand2 is " + operand2)
-        if (Number.parseInt(digit) || Number.parseInt(digit) === 0){
-            setInput([...input, digit])
+
+        if(event.target.value === "AC"){
+            setFirstTerm(0);
+            setOperation("")
+            setOutput(0);
+            equation.current = "";
         }
 
-        if(digit === "+"){
-            setOp('+')
-            setOperand1(num)
-            setInput([])
+
+        if (event.target.value === '+' || event.target.value === '-' || event.target.value === '/' || event.target.value === 'X'){
+            setFirstTerm(Number.parseInt(equation.current))
+            equation.current = "";
+            setOperation(event.target.value);
         }
 
-        if(digit === "-"){
-            setOp('-')
-            setOperand1(num)
-            setInput([])
+        if(operation === ""){
+            if(Number.parseInt(event.target.value) || Number.parseInt(event.target.value) === 0){
+                equation.current += event.target.value
+                setOutput(equation.current)
+            }
         }
 
-        if(digit === "/"){
-            setOp('/')
-            setOperand1(num)
-            setInput([])
-        }
+        if(operation !== ""){
+            if(Number.parseInt(event.target.value) || Number.parseInt(event.target.value) === 0){
+                equation.current += event.target.value
+                setOutput(equation.current)
+            }
 
-        if(digit === "="){
-            setOperand2(num) 
-            setInput([0])
-            
-        }
-
-        if(digit === "AC"){
-            setOperand1(0)
-            setOperand2(0);
-            setNum(0)
-            setInput([])
+            if(event.target.value === "="){
+                
+                if(operation === "+"){
+                    setOutput(Number.parseInt(firstTerm) + Number.parseInt(equation.current))
+                    equation.current = "";
+                    setFirstTerm(0);
+                }
+                if(operation === "-"){
+                    setOutput(Number.parseInt(firstTerm) - Number.parseInt(equation.current))
+                    equation.current = ""
+                }
+                if(operation === "X"){
+                    setOutput(Number.parseInt(firstTerm) * Number.parseInt(equation.current))
+                    equation.current = ""
+                    setFirstTerm(0);
+                }
+                if(operation === "/"){
+                    setOutput(Number.parseInt(firstTerm) / Number.parseInt(equation.current))
+                    equation.current = ""
+                    setFirstTerm(0);
+                }
+            }
         }
     }
 
     return(
     <div className='calculator-body'>
-        <OutputField num={num}/>
+        <OutputField num={output}/>
         <div className='key-body'>
             {labels.map((label,idx)=>
             {   
